@@ -4,3 +4,6 @@ pymupdf
 pillow
 ipython
 openpyxl
+matplotlib
+seaborn
+opencv-python
