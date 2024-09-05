@@ -7,3 +7,8 @@ openpyxl
 matplotlib
 seaborn
 opencv-python
+torch
+torchvision
+tqdm
+pillow
+scikit-learn
