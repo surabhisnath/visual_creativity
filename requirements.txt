@@ -10,5 +10,5 @@ opencv-python
 torch
 torchvision
 tqdm
-pillow
+requests
 scikit-learn

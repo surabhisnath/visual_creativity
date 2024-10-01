@@ -5,9 +5,13 @@ import torch.nn as nn
 import torchvision.transforms as transforms
 import torchvision.models as models
 import matplotlib.pyplot as plt
-from tqdm import tqdm
 from sklearn.manifold import TSNE
 import numpy as np
+from torch.utils.data import DataLoader, Dataset
+from sklearn.neural_network import MLPClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
 
 
 # 1. Load the images from folders A and B
@@ -27,15 +31,15 @@ def load_images_from_folder(folders):
 
 # Paths to folders
 folders_A = [
-    "../data/adults/stimuli_G",
-    "../data/adults/stimuli_I",
-    "../data/adults/stimuli_R",
+    "../data/_adults/stimuli_G",
+    "../data/_adults/stimuli_I",
+    "../data/_adults/stimuli_R",
 ]
 
 folders_B = [
-    "../data/children/stimuli_G",
-    "../data/children/stimuli_I",
-    "../data/children/stimuli_R",
+    "../data/_children/stimuli_G",
+    "../data/_children/stimuli_I",
+    "../data/_children/stimuli_R",
 ]
 
 
@@ -96,3 +100,31 @@ plt.scatter(reduced_B[:, 0], reduced_B[:, 1], color="red", label="children drawi
 plt.title("Final Layer Representations (t-SNE reduced to 2D)")
 plt.legend()
 plt.savefig("tsne.png")
+
+
+# 6
+# 5. Prepare labels for A and B
+labels_A = np.zeros(len(features_A))  # Label 0 for A
+labels_B = np.ones(len(features_B))   # Label 1 for B
+
+# Combine features and labels
+X = np.vstack((features_A, features_B))  # Feature matrix
+y = np.concatenate((labels_A, labels_B))  # Labels
+
+# 6. Train-Test Split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# 7. Train an MLP on the extracted features
+mlp = MLPClassifier(hidden_layer_sizes=(128, 64), max_iter=500, random_state=42)
+mlp.fit(X_train, y_train)
+
+# 8. Predict and Evaluate
+y_pred = mlp.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Test Accuracy: {accuracy * 100:.2f}%")
+
+# Optionally, you can print a confusion matrix to evaluate the model performance
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(y_test, y_pred)
+print("Confusion Matrix:")
+print(cm)
