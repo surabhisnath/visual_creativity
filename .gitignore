@@ -2,3 +2,4 @@
 BDS_thesis_SinjaChen/
 RMP_internship_GuiomarSchroder/
 scripts/make_csvs.ipynb
+.env*
