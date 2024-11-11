@@ -12,3 +12,4 @@ torchvision
 tqdm
 requests
 scikit-learn
+scikit-image
