@@ -13,3 +13,4 @@ tqdm
 requests
 scikit-learn
 scikit-image
+wordcloud
