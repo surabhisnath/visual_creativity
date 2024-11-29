@@ -8,8 +8,9 @@ import matplotlib.pyplot as plt
 
 ink_densities = []
 i = 0
-path = "../data/adults/stimuli_R/"
+path = "../data/new_adults/stimuli_R/"
 for im in os.listdir(path):
+
     if im != ".DS_Store":
         # image = cv2.imread(path + im, cv2.IMREAD_GRAYSCALE)
 
